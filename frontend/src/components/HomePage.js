@@ -17,7 +17,7 @@ import {
   getReserveOfNTKTokens,
 } from "./getAmount";
 import { BigNumber, ethers } from "ethers";
-import { getAmountOfTokensReceivedFromSwap,swapTokens } from "./swap";
+import { getAmountOfTokensReceivedFromSwap, swapTokens } from "./swap";
 import { addLiquidity, calculateNTK } from "./addLiquidity";
 import { getTokensAfterRemove, removeLiquidity } from "./removeLiquidity";
 
@@ -90,10 +90,10 @@ const HomePage = (props) => {
       console.error(error);
     }
   };
-  console.log(swapAmount)
+ 
   /**** SWAP FUNCTIONS ****/
   const swap = async () => {
-      
+    try {
       const swapAmountWei = ethers.utils.parseEther(swapAmount);
       if (!swapAmountWei.eq(0)) {
         const signer = props.web3.provider.getSigner();
@@ -107,7 +107,10 @@ const HomePage = (props) => {
         await getAmounts();
         setSwapAmount("");
       }
-    
+    } catch (error) {
+      console.error(error);
+      setSwapAmount("");
+    }
   };
   const _getAmountOfTokensReceivedFromSwap = async () => {
     try {
@@ -204,6 +207,7 @@ const HomePage = (props) => {
     swapAmount && _getAmountOfTokensReceivedFromSwap();
   }, [props.userAddress, swapAmount]);
 
+ 
   return (
     <Box>
       <Stack gap={2}>
@@ -226,7 +230,7 @@ const HomePage = (props) => {
               letterSpacing: ".1rem",
             }}
           >
-            {ethers.utils.formatEther(ntklpBalance)} NUKETK LP TOKENS
+            {ethers.utils.formatUnits(ntklpBalance)} NUKETK LP TOKENS
           </Typography>
           <Typography
             variant="body1"
@@ -237,6 +241,7 @@ const HomePage = (props) => {
             }}
           >
             {ethers.utils.formatEther(ntkBalance)} NUKETK TOKENS
+            
           </Typography>
           <Typography
             variant="body1"
@@ -271,7 +276,6 @@ const HomePage = (props) => {
                       id="outlined-size-small"
                       size="small"
                       onChange={(e) => setAddEther(e.target.value)}
-                      value={addEther}
                     />
                     <TextField
                       type="number"
@@ -284,7 +288,6 @@ const HomePage = (props) => {
                           )
                         )
                       }
-                      value={addNTKTokens}
                     />
                     <Button
                       variant="contained"
@@ -390,8 +393,12 @@ const HomePage = (props) => {
                   }}
                 >
                   {ethSelected
-                    ? `YOU WILL GET ${ethers.utils.formatEther(tokenToBeReceivedAfterSwap)} NTK TOKENS`
-                    : `YOU WILL GET ${ethers.utils.formatEther(tokenToBeReceivedAfterSwap)} ETHERS`}
+                    ? `YOU WILL GET ${ethers.utils.formatEther(
+                        tokenToBeReceivedAfterSwap
+                      )} NTK TOKENS`
+                    : `YOU WILL GET ${ethers.utils.formatEther(
+                        tokenToBeReceivedAfterSwap
+                      )} ETHERS`}
                 </Typography>
                 <Button variant="contained" onClick={() => swap()}>
                   swap

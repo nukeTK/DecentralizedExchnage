@@ -1,7 +1,7 @@
 import { Contract} from "ethers";
 import EXCHANGE_CONTRACT_ABI from "../artifacts/contracts/Exchange.sol/Exchange.json";
 
-const EXCHANGE_CONTRACT_ADDRESS = "0xfAc8f852DefE5b941a4b2e5AB4c2127BD5186FfD";
+const EXCHANGE_CONTRACT_ADDRESS = "0x005fC6a9bC16031A0864d9a48925Dc0eA30f1A39";
 
 
 
