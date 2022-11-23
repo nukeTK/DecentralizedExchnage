@@ -36,7 +36,7 @@ const HomePage = (props) => {
   const [ntklpBalance, setNTKLPBalance] = useState(0);
   /** Variables to keep track of liquidity to be added or removed */
   // addEther is the amount of Ether that the user wants to add to the liquidity
-  const [addEther, setAddEther] = useState(0);
+  const [addEther, setAddEther] = useState("");
   // addNTKTokens keeps track of the amount of NTK tokens that the user wants to add to the liquidity
   // in case when there is no initial liquidity and after liquidity gets added it keeps track of the
   // NTK tokens that the user can add given a certain amount of ether
@@ -90,7 +90,7 @@ const HomePage = (props) => {
       console.error(error);
     }
   };
- 
+
   /**** SWAP FUNCTIONS ****/
   const swap = async () => {
     try {
@@ -207,64 +207,86 @@ const HomePage = (props) => {
     swapAmount && _getAmountOfTokensReceivedFromSwap();
   }, [props.userAddress, swapAmount]);
 
- 
   return (
     <Box>
-      <Stack gap={2}>
-        <Paper elevation={10} sx={{ padding: "20px", borderRadius: "20px" }}>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-            }}
-          >
-            User Account
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-            }}
-          >
-            {ethers.utils.formatUnits(ntklpBalance)} NUKETK LP TOKENS
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-            }}
-          >
-            {ethers.utils.formatEther(ntkBalance)} NUKETK TOKENS
-            
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-            }}
-          >
-            {ethers.utils.formatEther(ethBalance)} ETHERS
-          </Typography>
-          <Stack gap={1} direction="row" sx={{ justifyContent: "center" }}>
-            <Button variant="contained" onClick={() => setLiquidityTab(true)}>
-              Liquidity
-            </Button>
-            <Button variant="contained" onClick={() => setLiquidityTab(false)}>
-              Swap
-            </Button>
+      <Stack
+        gap={3}
+        direction="row"
+        sx={{ justifyContent: "center", marginBottom: "10px" }}
+      >
+        <Button variant="contained" onClick={() => setLiquidityTab(true)}>
+          Liquidity
+        </Button>
+        <Button variant="contained" onClick={() => setLiquidityTab(false)}>
+          Swap
+        </Button>
+      </Stack>
+      <Stack gap={3} direction="row" sx={{ justifyContent: "center" }}>
+        <Paper
+          elevation={10}
+          sx={{
+            padding: "20px",
+            borderRadius: "20px",
+            backgroundColor: "#4B4453",
+            opacity: "0.9",
+          }}
+        >
+          <Stack gap={1} sx={{ textAlign: "left" }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".1rem",
+                color: "white",
+              }}
+            >
+              USER ACCOUNT TOKEN HOLDING
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".1rem",
+                color: "white",
+              }}
+            >
+              NUKETK LP TOKENS : {ethers.utils.formatUnits(ntklpBalance)}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".1rem",
+                color: "white",
+              }}
+            >
+              NUKETK TOKENS : {ethers.utils.formatEther(ntkBalance)}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".1rem",
+                color: "white",
+              }}
+            >
+              ETHERS : {ethers.utils.formatEther(ethBalance)}
+            </Typography>
           </Stack>
         </Paper>
         <Paper
           elevation={10}
-          sx={{ width: "400px", padding: "20px", borderRadius: "10px" }}
+          sx={{
+            width: "400px",
+            padding: "20px",
+            borderRadius: "10px",
+            backgroundImage:
+              "linear-gradient(to right top, #ffffff, #cdcdcd, #9d9d9d, #707070, #464646)",
+          }}
         >
           <Stack gap={2}>
             {liquidityTab ? (
@@ -274,11 +296,17 @@ const HomePage = (props) => {
                     <TextField
                       label="Enter the Amount of Ethers"
                       id="outlined-size-small"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                       size="small"
                       onChange={(e) => setAddEther(e.target.value)}
                     />
                     <TextField
                       type="number"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                       label="Amount of NTK tokens"
                       size="small"
                       onChange={(e) =>
@@ -303,6 +331,10 @@ const HomePage = (props) => {
                       label="Enter the Amount of Ethers"
                       id="outlined-size-small"
                       size="small"
+                      variant="standard"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                       onChange={async (e) => {
                         setAddEther(e.target.value);
                         const _addNTKTokens = await calculateNTK(
@@ -315,13 +347,16 @@ const HomePage = (props) => {
                       value={addEther}
                     />
                     <Typography
+                      variant="body2"
                       sx={{
+                        textAlign: "left",
+                        color: "#2A272A",
                         fontFamily: "monospace",
                         fontWeight: 700,
                         letterSpacing: ".1rem",
                       }}
                     >
-                      YOU WILL GET ${ethers.utils.formatEther(addNTKTokens)} NTK
+                      USER GET : {ethers.utils.formatEther(addNTKTokens)} NTKLP
                       TOKENS
                     </Typography>
                     <Button
@@ -337,6 +372,10 @@ const HomePage = (props) => {
                   label="Enter the Amount of NTKLP Tokens"
                   id="outlined-size-small"
                   size="small"
+                  variant="standard"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   onChange={async (e) => {
                     setRemoveNTKLPTokens(e.target.value || "0");
                     // Calculate the amount of Ether and CD tokens that the user would receive
@@ -345,14 +384,17 @@ const HomePage = (props) => {
                   }}
                 />
                 <Typography
+                  variant="body2"
                   sx={{
                     fontFamily: "monospace",
                     fontWeight: 700,
                     letterSpacing: ".1rem",
+                    color: "#2A272A",
+                    textAlign:"left",
                   }}
                 >
-                  {`You will get ${ethers.utils.formatEther(removeNTK)} NTK
-                    Tokens and ${ethers.utils.formatEther(removeEther)} Eth`}
+                  {`USER GET :  ${ethers.utils.formatEther(removeNTK)} NTK
+                     ${ethers.utils.formatEther(removeEther)} ETH`}
                 </Typography>
                 <Button
                   variant="contained"
@@ -382,14 +424,21 @@ const HomePage = (props) => {
                   id="outlined-size-small"
                   size="small"
                   type="number"
+                  variant="standard"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   value={swapAmount}
                   onChange={(e) => setSwapAmount(e.target.value || "")}
                 />
                 <Typography
+                  variant="body2"
                   sx={{
                     fontFamily: "monospace",
                     fontWeight: 700,
                     letterSpacing: ".1rem",
+                    color: "#2A272A",
+                    textAlign:"left",
                   }}
                 >
                   {ethSelected
