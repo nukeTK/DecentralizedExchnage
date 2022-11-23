@@ -4,7 +4,7 @@ import exchnageabi from "./artifacts/contracts/Exchange.sol/Exchange.json";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import HomePage from "./components/HomePage";
-import { Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 
 const { ethers } = require("ethers");
 const tokenAddress = "0x83847879B0142E2354946d4f2553A569897AaCe2";
@@ -46,7 +46,13 @@ const App = () => {
     }
   };
   return (
-    <Box sx={{ backgroundColor: "darkgrey", height: "100vh" }}>
+    <Box
+      sx={{
+        backgroundImage:
+          " linear-gradient(to right, #000000, #13090e, #1c111a, #211726, #231e35, #231e35, #231e35, #231e35, #211726, #1c111a, #13090e, #000000)",
+        height: "100vh",
+      }}
+    >
       <Stack gap={2} sx={{ textAlign: "center", alignItems: "center" }}>
         <Typography
           variant="h4"
@@ -54,7 +60,7 @@ const App = () => {
             fontFamily: "monospace",
             fontWeight: 700,
             letterSpacing: ".1rem",
-            color:"darkcyan"
+            color: "white",
           }}
         >
           CRYPTO EXCHANGE
@@ -65,16 +71,18 @@ const App = () => {
             fontFamily: "monospace",
             fontWeight: 700,
             letterSpacing: ".1rem",
+            color: "white",
           }}
         >
           Exchange GoerliEth = ERC20 NTK TOKENs
         </Typography>
+
         <Button
           variant="contained"
           onClick={() => connectToWallet()}
-          sx={{ width: "20%" }}
+          sx={{ width: "30%" }}
         >
-          {userAddress ? userAddress : "Connect To wallet"}
+          {userAddress ? `User Address : ${userAddress}` : "Connect To wallet"}
         </Button>
         {userAddress && <HomePage web3={web3} userAddress={userAddress} />}
       </Stack>
