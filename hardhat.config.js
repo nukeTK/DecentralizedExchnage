@@ -1,7 +1,8 @@
 /** @type import('hardhat/config').HardhatUserConfig */
 require('dotenv').config();
 require('@nomiclabs/hardhat-ethers');
-const {API_KEY,PRIVATE_KEY} = process.env;
+require("@nomiclabs/hardhat-etherscan");
+const {API_KEY,PRIVATE_KEY,ETHERSCAN_API_KEY} = process.env;
 module.exports = {
   solidity: "0.8.9",
   networks:{
@@ -12,5 +13,8 @@ module.exports = {
   },
   paths:{
     artifacts:'./frontend/src/artifacts'
+  },
+  etherscan:{
+    apikey:`${ETHERSCAN_API_KEY}`
   }
 };

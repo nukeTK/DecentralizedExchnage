@@ -8,7 +8,7 @@ import { Stack, Typography } from "@mui/material";
 
 const { ethers } = require("ethers");
 const tokenAddress = "0x83847879B0142E2354946d4f2553A569897AaCe2";
-const exchangeAddress = "0xfAc8f852DefE5b941a4b2e5AB4c2127BD5186FfD";
+const exchangeAddress = "0x005fC6a9bC16031A0864d9a48925Dc0eA30f1A39";
 
 const App = () => {
   const [web3, setWeb3] = useState({
