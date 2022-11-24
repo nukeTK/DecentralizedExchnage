@@ -327,25 +327,32 @@ const HomePage = (props) => {
                   </>
                 ) : (
                   <>
-                    <TextField
-                      label="Enter the Amount of Ethers"
-                      id="outlined-size-small"
-                      size="small"
-                      variant="standard"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      onChange={async (e) => {
-                        setAddEther(e.target.value);
-                        const _addNTKTokens = await calculateNTK(
-                          e.target.value || "0",
-                          etherBalanceContract,
-                          reservedNTK
-                        );
-                        setAddNTKTokens(_addNTKTokens);
-                      }}
-                      value={addEther}
-                    />
+                    <Paper
+                      elevation={5}
+                      sx={{ borderRadius: "20px", padding: "10px" }}
+                    >
+                      <TextField
+                        label="Enter the Amount of Ethers"
+                        id="outlined-size-small"
+                        sx={{
+                          width: "100%",
+                          "& fieldset": { border: "none" },
+                        }}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        onChange={async (e) => {
+                          setAddEther(e.target.value);
+                          const _addNTKTokens = await calculateNTK(
+                            e.target.value || "0",
+                            etherBalanceContract,
+                            reservedNTK
+                          );
+                          setAddNTKTokens(_addNTKTokens);
+                        }}
+                        value={addEther}
+                      />
+                    </Paper>
                     <Typography
                       variant="body2"
                       sx={{
@@ -362,27 +369,39 @@ const HomePage = (props) => {
                     <Button
                       variant="contained"
                       color="success"
+                      sx={{
+                        width: "80%",
+                        alignSelf: "center",
+                        borderRadius: "10px",
+                      }}
                       onClick={() => _addLiquidity()}
                     >
                       Add Liquidity
                     </Button>
                   </>
                 )}
-                <TextField
-                  label="Enter the Amount of NTKLP Tokens"
-                  id="outlined-size-small"
-                  size="small"
-                  variant="standard"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onChange={async (e) => {
-                    setRemoveNTKLPTokens(e.target.value || "0");
-                    // Calculate the amount of Ether and CD tokens that the user would receive
-                    // After he removes `e.target.value` amount of `LP` tokens
-                    await _getTokensAfterRemove(e.target.value || "0");
-                  }}
-                />
+                <Paper
+                  elevation={5}
+                  sx={{ borderRadius: "20px", padding: "10px" }}
+                >
+                  <TextField
+                    label="Enter the Amount of NTKLP Tokens"
+                    id="outlined-size-small"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      width: "100%",
+                      "& fieldset": { border: "none" },
+                    }}
+                    onChange={async (e) => {
+                      setRemoveNTKLPTokens(e.target.value || "0");
+                      // Calculate the amount of Ether and CD tokens that the user would receive
+                      // After he removes `e.target.value` amount of `LP` tokens
+                      await _getTokensAfterRemove(e.target.value || "0");
+                    }}
+                  />
+                </Paper>
                 <Typography
                   variant="body2"
                   sx={{
@@ -390,7 +409,7 @@ const HomePage = (props) => {
                     fontWeight: 700,
                     letterSpacing: ".1rem",
                     color: "#2A272A",
-                    textAlign:"left",
+                    textAlign: "left",
                   }}
                 >
                   {`USER GET :  ${ethers.utils.formatEther(removeNTK)} NTK
@@ -399,6 +418,11 @@ const HomePage = (props) => {
                 <Button
                   variant="contained"
                   color="error"
+                  sx={{
+                    width: "80%",
+                    alignSelf: "center",
+                    borderRadius: "10px",
+                  }}
                   onClick={() => _removeLiquidity()}
                 >
                   remove Liquidity
@@ -419,18 +443,25 @@ const HomePage = (props) => {
                   <MenuItem value={true}>Ethereum</MenuItem>
                   <MenuItem value={false}>NTK</MenuItem>
                 </Select>
+                <Paper
+                      elevation={5}
+                      sx={{ borderRadius: "20px", padding: "10px" }}
+                    >
                 <TextField
                   label="Enter the Amount"
                   id="outlined-size-small"
-                  size="small"
+                  sx={{
+                    width: "100%",
+                    "& fieldset": { border: "none" },
+                  }}
                   type="number"
-                  variant="standard"
                   InputLabelProps={{
                     shrink: true,
                   }}
                   value={swapAmount}
                   onChange={(e) => setSwapAmount(e.target.value || "")}
                 />
+                </Paper>
                 <Typography
                   variant="body2"
                   sx={{
@@ -438,7 +469,7 @@ const HomePage = (props) => {
                     fontWeight: 700,
                     letterSpacing: ".1rem",
                     color: "#2A272A",
-                    textAlign:"left",
+                    textAlign: "left",
                   }}
                 >
                   {ethSelected
@@ -449,7 +480,15 @@ const HomePage = (props) => {
                         tokenToBeReceivedAfterSwap
                       )} ETHERS`}
                 </Typography>
-                <Button variant="contained" onClick={() => swap()}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: "80%",
+                    alignSelf: "center",
+                    borderRadius: "10px",
+                  }}
+                  onClick={() => swap()}
+                >
                   swap
                 </Button>
               </>
